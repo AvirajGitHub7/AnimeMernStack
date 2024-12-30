@@ -1,0 +1,133 @@
+[
+    
+    {
+      "id":1,
+      "name":"Suzume",
+      "category":"free",
+      "title": "A girl's journey to close mysterious doors causing disasters.",
+       "rating": 9.6,
+       "image":"https://explainedthis.com/wp-content/uploads/2023/04/suzume-no-tojimari.webp"
+    },
+    {
+        "id": 2,
+        "name": "Josee, the Tiger, and the Fish",
+        "category": "free",
+        "title": "A heartwarming story of love, dreams, and overcoming life's obstacles.",
+        "rating": 8.7,
+        "image": "https://image.tmdb.org/t/p/w1280/dmZfiaSvBoCMTdyUsEqGql4yqul.jpg"
+      },
+    
+    {
+        "id": 3,
+        "name": "Demon Slayer",
+        "category": "premium",
+        "title": "A boy's quest to save his sister and destroy demons.",
+        "rating": 9.5,
+        "image": "https://th.bing.com/th/id/OIP.M8cS1AySCSKgUK3NSSFlVQAAAA?rs=1&pid=ImgDetMain"
+    },
+   
+
+    
+    {
+        "id": 4,
+        "name": "Your Name",
+        "category": "free",
+        "title": "Two strangers magically swap lives and connect.",
+        "rating": 9.7,
+        "image": "https://m.media-amazon.com/images/M/MV5BNTQyMDQwYTUtMDdlMC00YTczLTk2NDktZDRjZDEyZjJmNGQzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Naruto",
+        "category": "standard",
+        "title": "A ninja's journey to achieve his dreams and protect his village.",
+        "rating": 9.0,
+        "image": "https://m.media-amazon.com/images/M/MV5BMTE5NzIwMGUtYTE1MS00MDUxLTgyZjctOWVkZDAxM2M4ZWQ4XkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
+        "id": 6,
+        "name": "One Piece",
+        "category": "premium",
+        "title": "Pirates seeking treasure and adventure on the high seas.",
+        "rating": 9.4,
+        "image": "https://www.fredzone.org/wp-content/uploads/2022/06/one-piece-film-red-trailer-Uta-Luffy.jpg"
+    },
+    {
+        "id": 7,
+        "name": "A Silent Voice",
+        "category": "premium",
+        "title": "A powerful tale of bullying, guilt, and heartfelt redemption.",
+        "rating": 8.9,
+        "image": "https://wallpaperaccess.com/full/1084621.png"
+      },
+    {
+        "id": 8,
+        "name": "Spirited Away",
+        "category": "free",
+        "title": "A girl trapped in a magical world seeks to save her parents.",
+        "rating": 9.6,
+        "image": "https://th.bing.com/th/id/R.c7ce41d0f84610a4c364456591cfc4ba?rik=6%2f7AFFgCCACeLg&riu=http%3a%2f%2fimages5.fanpop.com%2fimage%2fphotos%2f29000000%2fSpirited-Away-spirited-away-29095841-1024-768.jpg&ehk=6%2frDh75HklVOHrZ4w9PgUd1W3FFLeqCzbY40OUHwkkw%3d&risl=&pid=ImgRaw&r=0"
+    },
+    {
+        "id": 9,
+        "name": "Weathering With You",
+        "category": "free",
+        "title": "A journey of love and sacrifice amidst the power of weather.",
+        "rating": 8.6,
+        "image": "https://staticg.sportskeeda.com/editor/2023/05/59948-16831302812524-1920.jpg"
+      },
+    
+      {
+        "id": 10,
+        "name": "A Whisker Away",
+        "category": "premium",
+        "title": "A magical journey where a girl transforms into a cat to win her love.",
+        "rating": 7.3,
+        "image": "https://th.bing.com/th/id/R.79310f9d75bed4131de0848f94e56d38?rik=Tmt%2fRLWByzsTyw&riu=http%3a%2f%2fcfm.yidio.com%2fimages%2fmovie%2f221510%2fposter-360x540.jpg&ehk=hzWkU8sjjMFck6uyk%2fZuOYMNirZSguiHM2nW4vh7W9g%3d&risl=&pid=ImgRaw&r=0"
+      },
+    
+    {
+        "id": 11,
+        "name": "My Hero Academia",
+        "category": "free",
+        "title": "A boy with no powers dreams of becoming a hero.",
+        "rating": 8.7,
+        "image": "https://wegotthiscovered.com/wp-content/uploads/2022/09/My-Hero-Academia.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Hunter x Hunter",
+        "category": "premium",
+        "title": "A boy embarks on a quest to find his father and become a hunter.",
+        "rating": 9.3,
+        "image": "https://th.bing.com/th/id/OIP.UfleGJERAK8v5-ODZ_An9AHaJ4?w=1536&h=2048&rs=1&pid=ImgDetMain"
+    },
+     {
+    "id": 6,
+    "name": "When Marnie Was There",
+    "category": "premium",
+    "title": "A hauntingly beautiful tale of friendship and hidden truths.",
+    "rating": 7.7,
+    "image": "https://picfiles.alphacoders.com/147/thumb-1920-147045.jpg"
+  },
+
+  {
+    "id": 7,
+    "name": "The Garden of Words",
+    "category": "free",
+    "title": "A visually stunning story of an unusual bond formed on rainy days.",
+    "rating": 7.5,
+    "image": "https://otakuusamagazine.com/wp-content/uploads/2023/05/garden-of-words-play1.jpeg"
+  },
+  {
+    "id": 9,
+    "name": "I Want to Eat Your Pancreas",
+    "category": "free",
+    "title": "A heartwarming tale of an unexpected friendship and life's fleeting moments.",
+    "rating": 8.2,
+    "image": "https://m.media-amazon.com/images/M/MV5BNDM4MWE3NGQtODlkYS00NWU5LTg3ZjMtMTEyNjljOWI4NWIxXkEyXkFqcGdeQXVyNzkzODk2Mzc@._V1_FMjpg_UX1000_.jpg"
+  }
+  
+
+
+]
