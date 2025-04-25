@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
-
-
+import axios  from 'axios'
+import toast from 'react-hot-toast'
 
 
 import { Link } from 'react-router-dom'
@@ -13,23 +13,56 @@ function Login() {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) => {
+    const userinfo={
+      
+      email:data.email,
+      password:data.password
+    }
+    await axios.post("http://localhost:4001/user/login",userinfo)
+    .then((res)=>{
+      console.log(res.data);
+      if(res.data){
+       toast.success('loggedin succesfully');
+       document.getElementById("my_modal_3").close();
+
+       setTimeout(() => {
+         localStorage.setItem("users",JSON.stringify(res.data.user))
+         
+         localStorage.setItem("token", res.data.token);
+         localStorage.setItem("role", res.data.role); 
+         window.location.reload();
+          
+        
+       }, 3000);
+      }
+    }).catch((err)=>{
+      console.log(err);
+      toast.error('Error:'+err.response.data.message);
+      setTimeout(()=>{
+
+      },2000)
+    })
+  }
 
 
   return (
     <div>
       <dialog id="my_modal_3" className="modal">
-  <div className="modal-box">
+        
+  <div className="modal-box dark:bg-gray-900 dark:text-white">
     <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-      {/* if there is a button in form, it will close the modal */}
-      <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</Link>
-    
+     
+      <Link to="/" 
+  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+  onClick={() => document.getElementById("my_modal_3").close()}> ✕ </Link>
+
     <h3 className="font-bold text-lg">Login</h3>
 
      {/*Email*/}
       <div className='mt-4 space-y-2'>
     <span>Email</span><br/>
-    <input className="outline-none w-80"placeholder='Enter your email' 
+    <input className="outline-none w-80 p-1 rounded-sm "placeholder='Enter your email' 
       {...register("email", { required: true })}
     />
     <br/>
@@ -40,7 +73,7 @@ function Login() {
       {/*password*/}
       <div className='mt-4 space-y-2'>
     <span>Password</span><br/>
-    <input className="outline-none w-80" placeholder='Enter your password' 
+    <input className="outline-none w-80 p-1 rounded-sm" placeholder='Enter your password' 
      {...register("password", { required: true })}
     />
     <br/>

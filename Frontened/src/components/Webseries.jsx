@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from "axios"
 import Navbar from './Navbar'
 import Footer from './Footer'
-import Cards
- from './Cards'
-import list from "../../public/list.json"
+import Cards from './Cards'
+import { useNavigate } from 'react-router-dom'
+
+import { useEffect } from 'react'
 
 function Webseries() {
- 
+
+  const navigate=useNavigate();
+
+  const[anime,setanime]=useState([])
+  useEffect(()=>{
+    const getAnime=async()=>{
+      try {
+        const res=await axios.get("http://localhost:4001/Anime");
+        console.log(res.data);
+        setanime(res.data);
+      } catch (error) {
+        console.log("Error:",error);
+      }
+    }
+    getAnime();
+  },[])
+
   return (
     <>
     
@@ -18,9 +36,17 @@ function Webseries() {
           Dive into a world of captivating stories and binge-worthy web series. From thrilling adventures to heartwarming dramas, Intense crime dramas or light-hearted comedies, explore a vast selection of web series that will keep you hooked for hours. 
         </p>
           <div className='mt-12 grid grid-cols-1 md:grid-cols-3'>
-             {list.map((item)=>{
-                return <Cards item={item} key={item.id}/>
-             })}
+
+          {anime.map((item) => (
+    <Cards
+      key={item._id}
+      item={item}
+      onClick={() => {
+        document.activeElement.blur(); // ✅ Focus remove kare
+        navigate(`/${item._id}`);
+      }}
+    />
+  ))}
           </div>
            </div>
         </div>

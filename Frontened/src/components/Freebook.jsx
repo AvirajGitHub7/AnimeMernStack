@@ -1,20 +1,46 @@
 import React from 'react'
-import list from "../../public/list.json"
+// import list from "../../public/list.json"
 import Cards from './Cards';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 function Freebook() {
-    const filterdata=list.filter((data)=>data.category==="free");
+
+  const navigate=useNavigate();
+
+  const[anime,setanime]=useState([])
+
+  useEffect(()=>{
+    const getAnime=async()=>{
+      try {
+        const res=await axios.get("http://localhost:4001/Anime");
+        console.log(res.data);
+        const data=res.data.filter((data)=>data.category==="free");
+        setanime(data)   
+      } catch (error) {
+        console.log("Error:",error);
+      }
+    }
+    getAnime();
+  },[])
+    // const filterdata=list.filter((data)=>data.category==="free");
     var settings = {
         dots: true,
         infinite: false,
         speed: 500,
         slidesToShow: 3 ,
         slidesToScroll: 3,
+        
+        
         initialSlide: 0,
         responsive: [
           {
@@ -55,11 +81,20 @@ function Freebook() {
 
           <div className='my-8'>
           <Slider {...settings}>
-             {filterdata.map((item)=>{
-               return  <Cards item={item} key={item.id}/>
-             })}
-          </Slider>
+  {anime.map((item) => (
+    <Cards
+      key={item._id}
+      item={item}
+      onClick={() => {
+        document.activeElement.blur(); // ✅ Focus remove kare
+        navigate(`/${item._id}`);
+      }}
+    />
+    
+  ))}
+</Slider>
 
+        
           </div>
 
 

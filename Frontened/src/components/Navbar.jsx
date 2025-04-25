@@ -1,11 +1,34 @@
 import React, { useState,useEffect } from 'react'
 import Login from './Login';
-function Navbar() {
+import {useAuth} from "../context/AuthProvider"
+import Logout from './Logout';
+import { useNavigate } from 'react-router-dom';
+import { useSearch } from '../context/SearchProvider';
 
+function Navbar() {
+  const navigate=useNavigate();
+
+  const {query,setquery}=useSearch();
+  
+  const handlekey=(e)=>{
+    if(e.key==="Enter"){
+
+      navigate('/search');
+      
+    }
+  }
+ 
+  const role = localStorage.getItem("role"); 
+
+  const [authuser,setauthuser]=useAuth();
+  
+
+   // Dark Mode
    const[theme,settheme]=useState(localStorage.getItem("theme")?localStorage.getItem("theme"):"light");
    const element=document.documentElement;
+
    useEffect(()=>{
-   if(theme==="dark"){
+   if(theme==="dark"){ 
       element.classList.add("dark");
       localStorage.setItem("theme","dark");
       document.body.classList.add("dark");
@@ -18,14 +41,18 @@ function Navbar() {
    },[theme])
 
 
-    const navitems=(<>
-      <li><a href='/'>Home</a></li>
-      <li><a href='/Webseries'>WebSeries</a></li>
-      <li><a>Movies</a></li>
-      <li><a>Contact</a></li>
-      <li><a>About</a></li>
-      
-    </>);
+   const navitems = (
+    <>
+      <li><a onClick={() => navigate('/')}>Home</a></li>
+      <li><a onClick={() => navigate('/Webseries')}>WebSeries</a></li>
+      <li><a onClick={() => navigate('/movies')}>Movies</a></li>
+      <li><a onClick={() => navigate('/contact')}>Contact</a></li>
+      <li><a onClick={() => navigate('/about')}>About</a></li>
+      {role === "admin" && <li><a onClick={() => navigate('/addanime')}>Adminpanel</a></li>}
+    </>
+  );
+
+   //Sticky navbar
     const [sticky,setsticky]=useState(false);
      useEffect(()=>{
         const handlesticky=()=>{
@@ -41,6 +68,7 @@ function Navbar() {
             window.removeEventListener("scroll",handlesticky);
         }
      },[]);
+
   return (
     <>
       <div className={`dark:bg-slate-900 dark:text-white navbar bg-base-100 max-w-screen-2xl mx-auto container md:px-20 py-4 fixed top-0 left-0 right-0 z-50 ${
@@ -81,7 +109,16 @@ function Navbar() {
   </div>
     <div className="hidden md:block">
            <label className=" flex items-center gap-2 px-2 py-2 border rounded-md">
-  <input type="text" className="grow outline-none" placeholder="Search" />
+
+  <input
+     type="text" 
+     className="grow outline-none"
+     placeholder="Search Anime...." 
+     value={query}
+     onChange={(e)=>setquery(e.target.value)}
+     onKeyDown={handlekey}
+    />
+
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"
@@ -94,15 +131,19 @@ function Navbar() {
   </svg>
            </label>
     </div>
-    <input onClick={()=>settheme(theme==="dark"?"light":"dark")} type="checkbox" value="synthwave" className="toggle theme-controller" />
-  <div className="">
-  <a onClick={()=>document.getElementById("my_modal_3").showModal()}
-  className="bg-black text-white px-3 py-2 md:px-5 md:py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer mr-5 md:mr-0">
-  Login
-  </a>
-   <Login/>
 
-  </div>
+    <input onClick={()=>settheme(theme==="dark"?"light":"dark")} type="checkbox" value="synthwave" className="toggle theme-controller" />
+
+   {authuser?(<Logout/>):(
+      <div className="">
+      <a onClick={()=>document.getElementById("my_modal_3").showModal()}
+      className="bg-black text-white px-3 py-2 md:px-5 md:py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer mr-5 md:mr-0">
+      Login
+      </a>
+       <Login/>
+       </div>
+   )}
+
     </div>
   
 </div>
