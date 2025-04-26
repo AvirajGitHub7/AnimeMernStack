@@ -63,3 +63,40 @@ export const login=async(req,res)=>{
       res.status(500).json({message:"Internal Server Error"});
     }
 }
+
+// Google login
+
+export const googlelogin=async(req,res)=>{
+ try {
+  const {email,name,picture}=req.body;
+  let existinguser=await User.findOne({email});
+
+  let newuser;
+  if(!existinguser){
+    newuser= await User.create({
+      fullname:name,
+      email,
+      picture,
+      password:" "
+    })
+  }else{
+    newuser=existinguser
+  }
+  const token=jwt.sign({id:newuser._id,role:newuser.role},"secret")
+
+  res.status(200).json({
+    message: "Google login successful",
+    token,
+    role: newuser.role,
+    user: {
+      _id: newuser._id,
+      email: newuser.email,
+      fullname: newuser.fullname,
+      picture: newuser.picture,
+    },
+  });
+ } catch (error) {
+  console.log("Google Login Error:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+ }
+}

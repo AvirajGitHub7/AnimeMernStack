@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Signup() {
   const location = useLocation();
@@ -33,6 +35,28 @@ function Signup() {
         toast.error('Error: ' + err.response.data.message);
       });
   };
+
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+
+useEffect(() => {
+  if (isAuthenticated && user) {
+    axios.post("http://localhost:4001/user/googlelogin", {
+      email: user.email,
+      name: user.name,
+      picture: user.picture,
+    })
+    .then((res) => {
+      localStorage.setItem("users", JSON.stringify(res.data.user));
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+}, [isAuthenticated, user]);
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] p-4">
@@ -94,16 +118,18 @@ function Signup() {
               Sign Up
             </button>
 
+          
+          </form>
+
                {/* Google Sign-In */}
           <button
+            onClick={() => loginWithRedirect()}
             type="button"
             className="w-full bg-red-500 hover:bg-red-400 text-white py-2 rounded-md text-lg font-medium transition duration-300"
           >
             Sign In with Google
           </button>
           
-          </form>
-
           <p className="text-center text-sm text-gray-600">
             Already have an account?{" "}
             <span onClick={() => document.getElementById("my_modal_3").showModal()} className="text-indigo-600 cursor-pointer underline">

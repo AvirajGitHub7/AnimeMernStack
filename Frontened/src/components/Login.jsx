@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import { useForm } from "react-hook-form"
 import axios  from 'axios'
 import toast from 'react-hot-toast'
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { Link } from 'react-router-dom'
 function Login() {
@@ -45,6 +46,25 @@ function Login() {
     })
   }
 
+  const { user, isAuthenticated ,loginWithRedirect} = useAuth0();
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      axios.post("http://localhost:4001/user/googlelogin", {
+        email: user.email,
+        name: user.name,
+        picture: user.picture,
+      })
+      .then((res) => {
+        localStorage.setItem("users", JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <div>
@@ -87,6 +107,7 @@ function Login() {
            <p>Not registered? <Link to="/Signup" className='text-blue-500 underline cursor-pointer'>Signup</Link></p>
       </div>
       </form>
+           {/* <button className=' bg-red-600 text-white rounded-md px-5 py-2 hover:bg-red-700 cursor-pointer duration-300' onClick={() => loginWithRedirect()}>Google</button> */}
   </div>
 </dialog>
     

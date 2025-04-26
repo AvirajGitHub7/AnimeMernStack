@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"; // Import useParams
+import { Link, useParams } from "react-router-dom"; 
 import Login from "../Login";
 import axios from "axios";
 
 function AnimeVideo() {
-  const { id } = useParams(); // Get ID from URL
+  const { id } = useParams(); 
   const [search, setSearch] = useState("");
   const [animeVideo, setAnimeVideo] = useState(null);
 
@@ -20,14 +20,26 @@ function AnimeVideo() {
     fetchAnimeVideo();
   }, [id]);
 
+  // 👇 Short URL ko Embed URL me convert karne ka function
+  const getEmbedUrl = (url) => {
+    if (!url) return "";
+    if (url.includes("youtu.be")) {
+      const videoId = url.split("youtu.be/")[1]?.split("?")[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes("watch?v=")) {
+      const videoId = url.split("watch?v=")[1]?.split("&")[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    return url; // agar already embed URL hai
+  };
+
   return (
     <div className="bg-gray-950 text-white min-h-screen">
       {/* Navbar */}
       <nav className="bg-gray-900 shadow-md">
         <div className="container max-w-screen-2xl mx-auto px-4 md:px-20 flex items-center justify-between h-16">
-          <Link to="/" className="text-3xl font-bold text-white">
-            AnimeLover
-          </Link>
+          <Link to="/" className="text-3xl font-bold text-white">AnimeLover</Link>
 
           {/* Search Box */}
           <div className="flex items-center gap-4">
@@ -71,13 +83,7 @@ function AnimeVideo() {
               className="input input-bordered bg-gray-800 text-white pl-4 pr-10 py-2 w-full rounded-md"
             />
             <button className="absolute right-2 top-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400 hover:text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
@@ -86,14 +92,14 @@ function AnimeVideo() {
 
         {/* Middle Section */}
         <div className="middle w-2/4 bg-gray-900 p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl mb-5 font-bold">{animeVideo?.title || "Anime Video Section"}</h1>
-         
+          <h1 className="text-2xl mb-5 font-bold">{animeVideo?.moviename || "Anime Video Section"}</h1>
+
           {/* Video Section */}
           {animeVideo?.videourl ? (
             <iframe
               width="100%"
               height="315"
-              src={animeVideo.videourl}
+              src={getEmbedUrl(animeVideo.videourl)}
               title="Anime Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -111,13 +117,11 @@ function AnimeVideo() {
               <img
                 className="w-full md:w-[300px] h-[200px] object-cover rounded-lg shadow-lg"
                 src={animeVideo.imageurl}
-                alt={animeVideo.title}
+                alt={animeVideo.moviename}
               />
-              <h1 className="text-xl font-bold mt-4">{animeVideo.title}</h1>
-              <p className="text-gray-400 text-sm">{animeVideo.aired || "Unknown Date"} • {animeVideo.type || "Anime"}</p>
-              <p className="mt-2 text-gray-300 text-sm text-center">
-                {animeVideo.description || "No synopsis available."}
-              </p>
+              <h1 className="text-xl font-bold mt-4">{animeVideo.moviename}</h1>
+              <p className="text-gray-400 text-sm">{animeVideo.aired || "Unknown Date"} • {animeVideo.status || "Anime"}</p>
+              <p className="mt-2 text-gray-300 text-sm text-center">{animeVideo.description || "No synopsis available."}</p>
             </div>
           ) : (
             <p className="text-gray-500 text-center">Loading Anime Details...</p>
@@ -129,7 +133,3 @@ function AnimeVideo() {
 }
 
 export default AnimeVideo;
-
-
-// ?.(optional chaining) for eg (animevideo?.title || videosection) agar title null or undefined ho error mat dena
-// undefined dena kyu ki undefined hone se videosection  dikhana.
